@@ -12,6 +12,7 @@
   let sleepMenu = null;
   let isActive = false;
   let currentTimerType = null;
+  let currentTimerLabel = null;
   let isLoadingStatus = false;
 
   /**
@@ -188,7 +189,7 @@
       menuItem.appendChild(itemBody);
 
       // Add checkmark for active timer
-      if (isActive && currentTimerType === key && !isLoadingStatus) {
+      if (isActive && currentTimerLabel === option.label && !isLoadingStatus) {
         const itemAside = document.createElement('div');
         itemAside.className = 'listItemAside actionSheetItemAsideText';
         itemAside.innerHTML = '<span class="material-icons" style="font-size: 1.2rem;">check</span>';
@@ -285,7 +286,7 @@
     const option = SLEEP_OPTIONS[optionKey];
 
     // If clicking on the same option that's currently active, disable the timer
-    if (isActive && currentTimerType === optionKey) {
+    if (isActive && currentTimerLabel === option.label) {
       cancelSleepTimer();
       return;
     }
@@ -307,6 +308,7 @@
     sleepTimerEndTime = endTime;
     isActive = true;
     currentTimerType = timerType;
+    currentTimerLabel = label;
 
     // Call plugin API
     callPluginAPI('startTimer', {
@@ -322,6 +324,7 @@
         // Reset state on error
         isActive = false;
         currentTimerType = null;
+        currentTimerLabel = null;
         sleepTimerEndTime = null;
         console.error('[Jellysleep] Failed to start duration timer:', error);
         return;
@@ -334,6 +337,7 @@
   function startEpisodeTimer(episodeCount, label = 'After this episode') {
     isActive = true;
     currentTimerType = 'episode';
+    currentTimerLabel = 'episode';
 
     // Call plugin API
     callPluginAPI('startTimer', {
@@ -348,6 +352,7 @@
         // Reset state on error
         isActive = false;
         currentTimerType = null;
+        currentTimerLabel = null;
         console.error('[Jellysleep] Failed to start episode timer:', error);
         return;
       });
@@ -365,6 +370,7 @@
     sleepTimerEndTime = null;
     isActive = false;
     currentTimerType = null;
+    currentTimerLabel = null;
 
     // Call plugin API
     callPluginAPI('cancelTimer')
@@ -558,6 +564,7 @@
       if (response && response.isActive) {
         isActive = true;
         currentTimerType = response.type;
+        currentTimerLabel = response.label;
 
         if (response.endTime) {
           sleepTimerEndTime = new Date(response.endTime);
@@ -567,6 +574,7 @@
       } else {
         isActive = false;
         currentTimerType = null;
+        currentTimerLabel = null;
         sleepTimerEndTime = null;
         updateButtonAppearance();
       }
@@ -587,6 +595,7 @@
     isActive: () => isActive,
     getEndTime: () => sleepTimerEndTime,
     getCurrentType: () => currentTimerType,
+    getCurrentLabel: () => currentTimerLabel,
     isLoadingStatus: () => isLoadingStatus,
     loadStatus: loadTimerStatus,
     showActionSheet: showSleepActionSheet,
@@ -597,6 +606,7 @@
       console.log('Button in DOM:', document.contains(sleepButton));
       console.log('Is active:', isActive);
       console.log('Current timer type:', currentTimerType);
+      console.log('Current timer label:', currentTimerLabel);
       console.log('Is loading status:', isLoadingStatus);
     },
   };
