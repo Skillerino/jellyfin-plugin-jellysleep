@@ -17,7 +17,7 @@
   /**
    * Sleep timer options with their respective durations in minutes
    */
-  const SLEEP_OPTIONS = {
+    const SLEEP_OPTIONS = {
     '15min': { label: '15 minutes', duration: 15 },
     '30min': { label: '30 minutes', duration: 30 },
     '1h': { label: '1 hour', duration: 60 },
@@ -353,7 +353,7 @@
       label: label,
     })
       .then(response => {
-        updateButtonAppearance();
+          updateButtonAppearance();
       })
       .catch(error => {
         // Reset state on error
