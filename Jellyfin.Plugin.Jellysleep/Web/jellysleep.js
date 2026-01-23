@@ -13,6 +13,7 @@
   let isActive = false;
   let currentTimerType = null;
   let isLoadingStatus = false;
+  let locale = navigator.language; // Browser locale, could be loaded from server
 
   /**
    * Sleep timer options with their respective durations in minutes
@@ -314,7 +315,7 @@
    */
   function startDurationTimer(minutes, label, timerType) {
     const endTime = new Date(Date.now() + minutes * 60 * 1000);
-    sleepTimerEndTime = new Date(Date.now() + ((new Date().getTimezoneOffset() + minutes) * 60 * 1000));
+    sleepTimerEndTime = endTime;
     isActive = true;
     currentTimerType = timerType;
 
@@ -569,8 +570,8 @@
         isActive = true;
         currentTimerType = response.type;
 
-        if (response.endTime) {
-          sleepTimerEndTime = new Date(response.endTime);
+          if (response.endTime) {
+            sleepTimerEndTime = new Date(Date.parse(response.endTime));
         }
 
         updateButtonAppearance();
@@ -599,9 +600,13 @@
       displayTimer.style.display = 'none';
       return;
     }
-    const remaingTime = new Date(sleepTimerEndTime - Date.now());
+    const remaingTime = new Date(sleepTimerEndTime - new Date() + (new Date().getTimezoneOffset() * 60 * 1000));
     if (remaingTime) {
-      displayTimer.innerHTML = remaingTime. toTimeString().slice(0, 8);
+      displayTimer.innerHTML = remaingTime.toLocaleTimeString(locale, {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit"
+      });
     }
 
     setTimeout(() => {
