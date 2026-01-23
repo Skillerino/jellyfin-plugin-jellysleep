@@ -17,7 +17,7 @@
   /**
    * Sleep timer options with their respective durations in minutes
    */
-    const SLEEP_OPTIONS = {
+   const SLEEP_OPTIONS = {
     '15min': { label: '15 minutes', duration: 15 },
     '30min': { label: '30 minutes', duration: 30 },
     '1h': { label: '1 hour', duration: 60 },
@@ -260,7 +260,6 @@
     sleepMenu.outsideClickHandler = outsideClickHandler;
     sleepMenu.escapeHandler = escapeHandler;
 
-
     updateDisplayTimer();
   }
 
@@ -327,7 +326,7 @@
       label: label,
     })
       .then(response => {
-          updateButtonAppearance();
+        updateButtonAppearance();
       })
       .catch(error => {
         // Reset state on error
@@ -353,7 +352,7 @@
       label: label,
     })
       .then(response => {
-          updateButtonAppearance();
+        updateButtonAppearance();
       })
       .catch(error => {
         // Reset state on error
@@ -593,20 +592,20 @@
     const displayTimer = document.querySelector('.displayTimer');
 
     if (!displayTimer) {
-        return;
+      return;
     }
 
-      if (isActive === false || currentTimerType === 'episode') {
-        displayTimer.style.display = 'none';
-        return;
+    if (isActive === false || currentTimerType === 'episode') {
+      displayTimer.style.display = 'none';
+      return;
     }
     const remaingTime = new Date(sleepTimerEndTime - Date.now());
     if (remaingTime) {
-        displayTimer.innerHTML = remaingTime. toTimeString().slice(0, 8);
+      displayTimer.innerHTML = remaingTime. toTimeString().slice(0, 8);
     }
 
     setTimeout(() => {
-        updateDisplayTimer();
+      updateDisplayTimer();
     }, 200);
   }
 
