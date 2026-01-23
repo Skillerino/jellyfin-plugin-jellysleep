@@ -337,7 +337,7 @@
   function startEpisodeTimer(episodeCount, label = 'After this episode') {
     isActive = true;
     currentTimerType = 'episode';
-    currentTimerLabel = 'episode';
+    currentTimerLabel = label;
 
     // Call plugin API
     callPluginAPI('startTimer', {
