@@ -327,7 +327,7 @@
       label: label,
     })
       .then(response => {
-        updateButtonAppearance();
+          updateButtonAppearance();
       })
       .catch(error => {
         // Reset state on error
@@ -596,11 +596,11 @@
         return;
     }
 
-    if (isActive == false) {
+      if (isActive === false || currentTimerType === 'episode') {
         displayTimer.style.display = 'none';
         return;
     }
-    const remaingTime = new Date(sleepTimerEndTime - Date.now() - 60 * 60 * 1000);
+    const remaingTime = new Date(sleepTimerEndTime - Date.now());
     if (remaingTime) {
         displayTimer.innerHTML = remaingTime. toTimeString().slice(0, 8);
     }
