@@ -314,7 +314,7 @@
    */
   function startDurationTimer(minutes, label, timerType) {
     const endTime = new Date(Date.now() + minutes * 60 * 1000);
-    sleepTimerEndTime = new Date(Date.now() + ((new Date().getTimezoneOffset() + 15) * 60 * 1000));
+    sleepTimerEndTime = new Date(Date.now() + ((new Date().getTimezoneOffset() + minutes) * 60 * 1000));
     isActive = true;
     currentTimerType = timerType;
 
