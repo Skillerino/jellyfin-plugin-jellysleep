@@ -122,6 +122,7 @@
     sleepButton.className = 'btnJellysleep autoSize paper-icon-button-light';
     sleepButton.title = 'Sleep Timer';
     sleepButton.setAttribute('aria-label', 'Sleep Timer');
+    sleepButton.style.display = 'block';
     sleepButton.innerHTML = `
             <span class="xlargePaperIconButton material-icons" aria-hidden="true">bedtime_off</span>
         `;
